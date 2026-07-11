@@ -304,18 +304,33 @@ footer { position: relative; z-index: 2; text-align: center; padding: 40px 6vw 6
   }
 }
 @media print {
-  body {
-    /* Ép buộc trình duyệt hiển thị màu nền */
+  /* 1. Ép trình duyệt không được tự ý tối ưu hóa màu sắc */
+  html, body {
+    background-color: #0c0813 !important; /* Thay bằng mã màu nền tối chính xác của bạn */
+    color: #ffffff !important; /* Ép chữ chính lên màu trắng */
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    
-    /* Bỏ thuộc tính fixed để dải màu trải đều theo các trang PDF */
-    background: linear-gradient(170deg, #FFFFFF 0%, #FFF9EE 32%, #FFF1D8 68%, #FFE9C6 100%) !important;
-    background-attachment: scroll !important; 
+    color-adjust: exact !important;
   }
 
-  /* Đảm bảo các bóng màu (blobs) nếu muốn giữ lại thì không bị lỗi vị trí */
+  /* 2. Sửa lỗi dải màu gradient và ảnh nền */
+  body {
+    background-image: linear-gradient(to bottom, #0c0813, #1a0b2e) !important; /* Thay dải màu tối của bạn vào đây */
+    background-attachment: scroll !important; /* Bắt buộc phải chuyển từ fixed sang scroll */
+  }
+
+  /* 3. Đảm bảo các khung nội dung (Cards) không bị mất màu nền */
+  .lesson-card, .about-story, .facts-card, .goal-card, .timeline-card {
+    background: rgba(255, 255, 255, 0.05) !important; /* Màu nền mờ của card trong darkmode */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 4. Giữ lại các đốm sáng, bóng màu (blobs) ở dạng tĩnh để không bị lệch */
   .blob-wrap, .blob {
-    position: absolute !important; /* Thay fixed bằng absolute khi in */
+    position: absolute !important;
+    clear: both;
   }
 }

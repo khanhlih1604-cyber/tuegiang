@@ -288,49 +288,26 @@ footer { position: relative; z-index: 2; text-align: center; padding: 40px 6vw 6
   .nav-links { flex-wrap: wrap; justify-content: center; }
   .tab-panel { padding: 26px 22px; }
 }
-
 @media print {
-  .blob, #sticker-layer, #star-layer, #constellation, .cursor-glow { display: none !important; }
-  nav { position: static !important; }
-  body { background: #fff !important; color: #111 !important; }
-  .flip-card { height: auto !important; perspective: none !important; }
-  .flip-inner {
-    position: static !important; transform: none !important; transition: none !important;
-    transform-style: flat !important; height: auto !important;
-  }
-  .flip-face {
-    position: static !important; transform: none !important; backface-visibility: visible !important;
-    height: auto !important; margin-bottom: 12px !important; page-break-inside: avoid;
-  }
-}
-@media print {
-  /* 1. Ép trình duyệt không được tự ý tối ưu hóa màu sắc */
+  /* Ép toàn bộ trang phải giữ màu tối huyền bí */
   html, body {
-    background-color: #0c0813 !important; /* Thay bằng mã màu nền tối chính xác của bạn */
-    color: #ffffff !important; /* Ép chữ chính lên màu trắng */
+    background: #060612 !important; /* Mã màu nền gốc của Giang */
+    color: #ffffff !important;      /* Ép chữ chính lên màu trắng rõ ràng */
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    color-adjust: exact !important;
   }
 
-  /* 2. Sửa lỗi dải màu gradient và ảnh nền */
+  /* Giữ màu chuyển sắc (gradient) cho body nếu có */
   body {
-    background-image: linear-gradient(to bottom, #0c0813, #1a0b2e) !important; /* Thay dải màu tối của bạn vào đây */
-    background-attachment: scroll !important; /* Bắt buộc phải chuyển từ fixed sang scroll */
+    background-image: radial-gradient(circle at 20% 10%, #17173a 0%, #060612 100%) !important;
+    background-attachment: scroll !important; 
   }
 
-  /* 3. Đảm bảo các khung nội dung (Cards) không bị mất màu nền */
-  .lesson-card, .about-story, .facts-card, .goal-card, .timeline-card {
-    background: rgba(255, 255, 255, 0.05) !important; /* Màu nền mờ của card trong darkmode */
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  /* Đảm bảo các khung nội dung (Cards) không bị đổi màu sai */
+  .lesson-card, .about-story, .facts-card, .goal-card, .timeline-card, div[class*="card"] {
+    background: rgba(255, 255, 255, 0.05) !important;
     color: #ffffff !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-  }
-
-  /* 4. Giữ lại các đốm sáng, bóng màu (blobs) ở dạng tĩnh để không bị lệch */
-  .blob-wrap, .blob {
-    position: absolute !important;
-    clear: both;
   }
 }

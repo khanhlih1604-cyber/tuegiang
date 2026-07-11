@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lê Tuệ Giang 🌌</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void: #0A0A1D;
+    --void-mid: #12122C;
+    --void-soft: #1B1B40;
+    --glass: rgba(255,255,255,0.055);
+    --glass-strong: rgba(255,255,255,0.09);
+    --glass-border: rgba(255,255,255,0.14);
+    --pink: #FF6FCF;
+    --pink-soft: #FF9EE0;
+    --purple: #A66BFF;
+    --purple-deep: #7C4DFF;
+    --blue: #6FC7FF;
+    --green-dot: #4CE0A0;
+    --star: #F5F1FF;
+    --ink: #EFEAFB;
+    --ink-soft: #B6ACD6;
+    --shadow-soft: 0 24px 48px -24px rgba(0,0,0,0.55);
+    --glow-pink: 0 0 26px rgba(255,111,207,0.35);
+    --radius-lg: 30px;
+    --radius-sm: 18px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  }
+  body{
+    margin: 0; font-family: 'Inter', sans-serif; color: var(--ink);
+    background: radial-gradient(circle at 20% 10%, #17173A 0%, var(--void) 45%, #060612 100%);
+    background-attachment: fixed; overflow-x: hidden; position: relative;
+  }
+  h1, h2, h3, .display{ font-family: 'Poppins', sans-serif; font-weight: 700; }
+  a{ color: inherit; text-decoration: none; }
+  button{ font-family: 'Inter', sans-serif; }
+  .grad-text{
+    background: linear-gradient(120deg, var(--pink), var(--purple));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* ===== starfield ===== */
+  #star-layer{ position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  .star-dot{ position: absolute; border-radius: 50%; background: var(--star); animation: twinkle ease-in-out infinite; }
+  @keyframes twinkle{ 0%,100%{ opacity: 0.15; } 50%{ opacity: 0.9; } }
+  #constellation{ position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.35; }
+
+  .blob{ position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.35; z-index: 0; pointer-events: none; }
+  .blob-1{ width: 420px; height: 420px; background: var(--purple-deep); top: -120px; left: -100px; animation: float1 16s ease-in-out infinite; }
+  .blob-2{ width: 380px; height: 380px; background: var(--pink); bottom: -110px; right: -90px; opacity: 0.28; animation: float2 20s ease-in-out infinite; }
+  .blob-3{ width: 280px; height: 280px; background: var(--blue); opacity: 0.2; top: 48%; right: 8%; animation: float3 18s ease-in-out infinite; }
+  @keyframes float1{ 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(40px,50px) scale(1.1); } }
+  @keyframes float2{ 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(-40px,-35px) scale(1.14); } }
+  @keyframes float3{ 0%,100%{ transform: translate(0,0) scale(1); } 50%{ transform: translate(-25px,-25px) scale(0.9); } }
+
+  #sticker-layer{ position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+  .float-sticker{ position: absolute; font-size: 1.5rem; animation: bob 5.5s ease-in-out infinite; opacity: 0.85; will-change: transform; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.4)); }
+  @keyframes bob{ 0%,100%{ transform: translateY(0) rotate(-6deg); } 50%{ transform: translateY(-18px) rotate(8deg); } }
+
+  .cursor-glow{
+    position: fixed; width: 20px; height: 20px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.9), var(--pink-soft) 55%, transparent 75%);
+    pointer-events: none; z-index: 999; transform: translate(-50%,-50%);
+    mix-blend-mode: screen; opacity: 0; transition: opacity 0.3s ease;
+  }
+
+  nav{
+    position: sticky; top: 14px; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 22px; margin: 14px 6vw 0; background: rgba(18, 18, 44, 0.65); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border); border-radius: 999px; box-shadow: var(--shadow-soft);
+  }
+  .logo-group{ display: flex; align-items: center; gap: 9px; }
+  .status-dot{ width: 9px; height: 9px; border-radius: 50%; background: var(--green-dot); box-shadow: 0 0 10px var(--green-dot); animation: pulse-dot 2s ease-in-out infinite; }
+  @keyframes pulse-dot{ 0%,100%{ transform: scale(1); opacity: 1; } 50%{ transform: scale(1.3); opacity: 0.6; } }
+  .logo{ font-family: 'Poppins', sans-serif; font-size: 1.15rem; }
+  .mssv-chip{
+    font-size: 0.66rem; font-weight: 700; color: var(--pink-soft);
+    background: rgba(255,111,207,0.12); border: 1px solid rgba(255,111,207,0.4);
+    padding: 4px 11px; border-radius: 999px; margin-left: 4px; white-space: nowrap;
+  }
+  .nav-links{ display: flex; gap: 8px; list-style: none; margin: 0; padding: 5px; background: rgba(255,255,255,0.04); border-radius: 999px; }
+  .nav-links li a{
+    display: inline-block; padding: 9px 18px; border-radius: 999px;
+    font-weight: 600; font-size: 0.86rem; color: var(--ink-soft);
+    transition: all 0.4s cubic-bezier(.3,1.4,.5,1);
+  }
+  .nav-links li a:hover, .nav-links li a.active{
+    background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff; box-shadow: 0 8px 18px -6px rgba(166,107,255,0.55); transform: translateY(-2px) scale(1.04);
+  }
+  .nav-btn{
+    display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 999px;
+    font-weight: 700; font-size: 0.82rem; cursor: pointer; border: 1.5px solid rgba(255,111,207,0.5);
+    background: rgba(255,111,207,0.08); color: var(--pink-soft);
+    transition: transform 0.35s cubic-bezier(.3,1.4,.5,1), background 0.3s ease;
+  }
+  .nav-btn:hover{ transform: translateY(-3px) rotate(-1deg); background: rgba(255,111,207,0.18); box-shadow: var(--glow-pink); }
+
+  section{ position: relative; z-index: 2; padding: 80px 6vw; max-width: 1180px; margin: 0 auto; }
+
+  /* ===== HERO ===== */
+  .intro-banner{ display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; margin-bottom: 44px; }
+  .avatar-frame{
+    width: 180px; height: 180px; border-radius: 32px; padding: 3px; position: relative;
+    background: linear-gradient(150deg, var(--pink), var(--purple), var(--blue));
+    box-shadow: var(--shadow-soft); animation: frame-float 6s ease-in-out infinite;
+  }
+  @keyframes frame-float{ 0%,100%{ transform: translateY(0) rotate(-1.5deg); } 50%{ transform: translateY(-10px) rotate(1.5deg); } }
+  .avatar-frame .avatar-inner{
+    width: 100%; height: 100%; border-radius: 29px; overflow: hidden;
+    background: linear-gradient(160deg, #16163A, #0E0E26);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Poppins', sans-serif; font-size: 2.6rem; font-weight: 700; color: var(--pink-soft);
+  }
+  .avatar-frame .sticker{
+    position: absolute; bottom: -2px; right: -8px; background: var(--void-mid); border: 1px solid var(--glass-border); border-radius: 50%;
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; box-shadow: var(--shadow-soft); animation: wiggle 3.4s ease-in-out infinite;
+  }
+  .avatar-frame .sticker.moon{ top: -4px; left: -10px; bottom: auto; right: auto; animation-delay: 0.4s; }
+  @keyframes wiggle{ 0%,100%{ transform: rotate(-10deg); } 50%{ transform: rotate(12deg); } }
+  .eyebrow{
+    display: inline-block; background: var(--glass); padding: 7px 18px; border-radius: 999px;
+    font-weight: 700; font-size: 0.78rem; letter-spacing: 0.3px; color: var(--pink-soft); border: 1px solid var(--glass-border);
+  }
+  .intro-banner h1{ font-size: clamp(1.9rem, 4vw, 2.6rem); color: var(--ink); margin: 0; }
+  .info-chips{ display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .info-chip{
+    display: flex; align-items: center; gap: 8px; background: var(--glass);
+    padding: 8px 16px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; color: var(--ink-soft);
+    box-shadow: var(--shadow-soft); border: 1px solid rgba(255,111,207,0.28);
+  }
+  .intro-banner .lead{ max-width: 620px; font-size: 1.0rem; line-height: 1.85; color: var(--ink-soft); margin: 4px 0 0; }
+  .hero-cta{ display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+  .btn{
+    padding: 12px 26px; border-radius: 999px; font-weight: 700; font-size: 0.88rem; cursor: pointer;
+    transition: transform 0.35s cubic-bezier(.3,1.4,.5,1), box-shadow 0.35s ease; display: inline-block;
+  }
+  .btn-primary{ background: linear-gradient(120deg, var(--pink), var(--purple)); color: #fff; border: none; box-shadow: 0 14px 26px -10px rgba(166,107,255,0.55); }
+  .btn-primary:hover{ transform: translateY(-4px) scale(1.03); box-shadow: var(--glow-pink); }
+  .btn-ghost{ background: transparent; color: var(--ink-soft); border: 1.5px solid var(--glass-border); }
+  .btn-ghost:hover{ transform: translateY(-4px); background: var(--glass); color: var(--ink); }
+
+  /* tab switcher */
+  .tabs-nav{ display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 26px; }
+  .tab-btn{
+    padding: 11px 20px; border-radius: 999px; border: 1px solid var(--glass-border); cursor: pointer;
+    font-weight: 700; font-size: 0.85rem; color: var(--ink-soft); background: var(--glass);
+    transition: all 0.35s cubic-bezier(.3,1.4,.5,1);
+  }
+  .tab-btn:hover{ transform: translateY(-3px); color: var(--ink); }
+  .tab-btn.active{ background: linear-gradient(120deg, var(--pink), var(--purple)); color: #fff; border-color: transparent; transform: translateY(-3px) scale(1.04); box-shadow: var(--glow-pink); }
+  .tab-panels{ position: relative; min-height: 220px; }
+  .tab-panel{
+    display: none; background: var(--glass-strong); border-radius: var(--radius-lg); padding: 34px 38px;
+    box-shadow: var(--shadow-soft); border: 1px solid var(--glass-border);
+    animation: panelFade 0.5s ease;
+  }
+  .tab-panel.active{ display: block; }
+  @keyframes panelFade{ from{ opacity: 0; transform: translateY(14px); } to{ opacity: 1; transform: translateY(0); } }
+  .tab-panel h3{ display: flex; align-items: center; gap: 10px; font-size: 1.15rem; color: var(--ink); margin: 0 0 14px; }
+  .tab-panel p{ font-size: 0.96rem; line-height: 1.9; color: var(--ink-soft); margin: 0 0 14px; }
+  .tab-panel p:last-child{ margin-bottom: 0; }
+  .goal-list{ list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .goal-list li{
+    display: flex; align-items: flex-start; gap: 10px; font-size: 0.92rem; line-height: 1.6; color: var(--ink-soft);
+    background: rgba(255,255,255,0.04); padding: 10px 14px; border-radius: 14px; border: 1px solid var(--glass-border);
+  }
+  .goal-list li::before{ content: "✦"; flex-shrink: 0; font-size: 0.8rem; color: var(--pink-soft); }
+  .hobby-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .hobby-item{
+    display: flex; align-items: center; gap: 10px; font-size: 0.9rem; font-weight: 600; color: var(--ink);
+    background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); padding: 12px 16px; border-radius: 14px;
+    transition: transform 0.3s cubic-bezier(.3,1.4,.5,1);
+  }
+  .hobby-item:hover{ transform: translateY(-3px); border-color: rgba(255,111,207,0.4); }
+  .hobby-item .ic{ font-size: 1.2rem; }
+  .tab-panel.closing{ background: linear-gradient(135deg, rgba(255,111,207,0.16), rgba(166,107,255,0.16)); text-align: center; }
+  .tab-panel.closing p{ color: var(--ink); font-style: italic; }
+
+  .section-head{ text-align: center; margin-bottom: 44px; }
+  .section-head .eyebrow{ display: inline-block; margin-bottom: 12px; }
+  .section-head h2{ font-size: clamp(1.7rem, 4vw, 2.4rem); color: var(--ink); }
+  .section-head p{ max-width: 560px; margin: 10px auto 0; color: var(--ink-soft); font-size: 1.0rem; }
+
+  .reveal{ opacity: 0; transform: translateY(40px) scale(0.97); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.2,.8,.3,1.15); }
+  .reveal.in-view{ opacity: 1; transform: translateY(0) scale(1); }
+
+  /* ===== bai tap — horizontal scroll carousel ===== */
+  .carousel-wrap{ position: relative; }
+  .carousel{
+    display: flex; gap: 22px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10px 4px 26px;
+    scrollbar-width: thin; scrollbar-color: var(--purple) transparent;
+  }
+  .carousel::-webkit-scrollbar{ height: 8px; }
+  .carousel::-webkit-scrollbar-thumb{ background: var(--purple); border-radius: 999px; }
+  .c-card{
+    flex: 0 0 300px; scroll-snap-align: start; background: var(--glass-strong); border-radius: var(--radius-sm);
+    padding: 24px 22px; box-shadow: var(--shadow-soft); border: 1px solid var(--glass-border); position: relative;
+    transition: transform 0.4s cubic-bezier(.2,.9,.3,1.3), border-color 0.3s ease;
+  }
+  .c-card:hover{ transform: translateY(-8px); border-color: rgba(255,111,207,0.4); }
+  .c-card .c-num{
+    width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple));
+    color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .c-card .tag{ position: absolute; top: 22px; right: 20px; font-size: 0.66rem; font-weight: 800; padding: 4px 11px; border-radius: 999px; background: rgba(255,111,207,0.14); color: var(--pink-soft); border: 1px solid rgba(255,111,207,0.3); }
+  .c-card h3{ margin: 0 0 12px; color: var(--ink); font-size: 1.0rem; line-height: 1.4; }
+  .c-goal{ display: flex; flex-direction: column; gap: 8px; margin: 0 0 14px; }
+  .c-goal .row{ display: flex; gap: 7px; align-items: flex-start; padding: 9px 11px; border-radius: 12px; background: rgba(255,255,255,0.04); font-size: 0.79rem; line-height: 1.55; color: var(--ink-soft); border: 1px solid var(--glass-border); }
+  .c-goal .row.result{ background: rgba(166,107,255,0.1); }
+  .c-goal .row b{ color: var(--ink); }
+  .c-card .drive-btn{
+    display: inline-block; padding: 8px 16px; border-radius: 999px; font-size: 0.78rem; font-weight: 700;
+    background: linear-gradient(120deg, var(--pink), var(--purple)); color: #fff;
+  }
+  .carousel-nav{ display: flex; justify-content: center; gap: 14px; margin-top: 4px; }
+  .c-arrow{
+    width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-border); cursor: pointer; font-size: 1.1rem;
+    background: var(--glass); color: var(--ink); box-shadow: var(--shadow-soft);
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .c-arrow:hover{ transform: scale(1.1); background: linear-gradient(120deg, var(--pink), var(--purple)); color: #fff; }
+
+  /* ===== tong ket — flip cards ===== */
+  .flip-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 50px; }
+  .flip-card{ perspective: 1200px; height: 220px; cursor: pointer; }
+  .flip-inner{
+    position: relative; width: 100%; height: 100%; transition: transform 0.7s cubic-bezier(.3,.9,.3,1.1); transform-style: preserve-3d;
+  }
+  .flip-card.flipped .flip-inner{ transform: rotateY(180deg); }
+  .flip-face{
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-soft); padding: 24px; display: flex; flex-direction: column;
+  }
+  .flip-front{
+    background: var(--glass-strong); align-items: center; justify-content: center; text-align: center; gap: 10px;
+    border: 1px solid var(--glass-border);
+  }
+  .flip-front .ic{ font-size: 2.2rem; }
+  .flip-front h3{ font-size: 1.02rem; color: var(--ink); margin: 0; }
+  .flip-front .hint{ font-size: 0.74rem; color: var(--ink-soft); }
+  .flip-back{
+    background: linear-gradient(135deg, rgba(255,111,207,0.22), rgba(166,107,255,0.22)); transform: rotateY(180deg);
+    justify-content: center; overflow-y: auto; border: 1px solid var(--glass-border);
+  }
+  .flip-back p{ font-size: 0.85rem; line-height: 1.7; color: var(--ink); margin: 0; }
+
+  .summary-stats{ display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; max-width: 700px; margin: 0 auto; text-align: center; }
+  .stat{ padding: 14px; border-radius: 18px; transition: transform 0.35s cubic-bezier(.3,1.4,.5,1); }
+  .stat .num{
+    font-family: 'Poppins', sans-serif; font-size: 2.0rem; color: var(--pink-soft); display: inline-block;
+    transition: text-shadow 0.35s ease, transform 0.35s cubic-bezier(.3,1.4,.5,1);
+  }
+  .stat.in-view .num{ animation: popNum 0.6s cubic-bezier(.3,1.6,.5,1); }
+  @keyframes popNum{ 0%{ transform: scale(0.4); opacity: 0; } 60%{ transform: scale(1.15); opacity: 1; } 100%{ transform: scale(1); } }
+  .stat:hover{ transform: translateY(-4px); }
+  .stat:hover .num{
+    text-shadow: 0 0 10px rgba(255,111,207,0.6), 0 0 22px rgba(166,107,255,0.6), 0 0 36px rgba(111,199,255,0.5);
+    transform: scale(1.08);
+  }
+  .stat .label{ font-size: 0.85rem; color: var(--ink-soft); margin-top: 4px; }
+
+  footer{ position: relative; z-index: 2; text-align: center; padding: 40px 6vw 60px; color: var(--ink-soft); font-size: 0.9rem; }
+
+  @media (max-width: 760px){
+    nav{ flex-direction: column; gap: 12px; padding: 14px 5vw; margin: 10px 4vw 0; }
+    .nav-links{ flex-wrap: wrap; justify-content: center; }
+    .tab-panel{ padding: 26px 22px; }
+  }
+
+  @media print{
+    .blob, #sticker-layer, #star-layer, #constellation, .cursor-glow{ display: none !important; }
+    nav{ position: static !important; }
+    body{ background: #fff !important; color: #111 !important; }
+    .flip-card{ height: auto !important; perspective: none !important; }
+    .flip-inner{
+      position: static !important; transform: none !important; transition: none !important;
+      transform-style: flat !important; height: auto !important;
+    }
+    .flip-face{
+      position: static !important; transform: none !important; backface-visibility: visible !important;
+      height: auto !important; margin-bottom: 12px !important; page-break-inside: avoid;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="star-layer"></div>
+<svg id="constellation"></svg>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+<div id="sticker-layer"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<nav>
+  <div class="logo-group">
+    <span class="status-dot"></span>
+    <span class="logo grad-text">Tuệ Giang</span>
+    <span class="mssv-chip">MSSV: 25041605</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#gioi-thieu" class="nav-link">Giới thiệu</a></li>
+    <li><a href="#bai-tap" class="nav-link">Bài tập cá nhân</a></li>
+    <li><a href="#tong-ket" class="nav-link">Tổng kết</a></li>
+  </ul>
+  <a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID?usp=drive_link" class="nav-btn" target="_blank" rel="noopener">📁 Google Drive</a>
+</nav>
+
+<section id="gioi-thieu">
+  <div class="intro-banner reveal">
+    <div class="avatar-frame">
+      <div class="avatar-inner">
+        <img src="tuegiang.jpg" alt="Avatar" style="width: 100% !important; height: 100% !important; object-fit: cover !important;"
+             onerror="this.style.display='none'; this.parentElement.innerHTML+='TG';">
+      </div>
+      <div class="sticker moon">🌙</div>
+      <div class="sticker">⭐</div>
+    </div>
+    <span class="eyebrow">🌌 PORTFOLIO MÔN HỌC · NHẬP MÔN CÔNG NGHỆ SỐ &amp; ỨNG DỤNG AI</span>
+    <h1>Xin chào! Mình là <span class="grad-text">Lê Tuệ Giang</span></h1>
+    <div class="info-chips">
+      <span class="info-chip">MSSV: 25041605</span>
+      <span class="info-chip">Khoa Ngôn ngữ và Văn hoá Trung Quốc</span>
+      <span class="info-chip">Trường Đại học Ngoại ngữ - ĐHQGHN</span>
+    </div>
+    <p class="lead">Rất vui vì bạn đã ghé qua khoảng trời nhỏ này! Đây là nơi mình cất giữ những bước chân đầu tiên khi làm quen với công nghệ số, song hành cùng chặng đường gắn bó với tiếng Trung và văn hoá Trung Hoa. Hãy thong thả dạo quanh và cùng mình nhìn lại một học kỳ nhiều điều mới mẻ nhé!</p>
+    <div class="hero-cta">
+      <a href="#bai-tap" class="btn btn-primary">Xem bài tập của mình ✨</a>
+      <a href="#tong-ket" class="btn btn-ghost">Đọc tổng kết 🌙</a>
+    </div>
+  </div>
+
+  <div class="tabs-nav reveal">
+    <button class="tab-btn active" data-tab="ban-than">🌠 Về bản thân</button>
+    <button class="tab-btn" data-tab="so-thich">🎨 Sở thích</button>
+    <button class="tab-btn" data-tab="hoc-tap">🎯 Mục tiêu học tập</button>
+    <button class="tab-btn" data-tab="portfolio">📔 Mục tiêu Portfolio</button>
+    <button class="tab-btn" data-tab="loi-ket">💌 Lời kết</button>
+  </div>
+
+  <div class="tab-panels reveal">
+    <div class="tab-panel active" id="panel-ban-than">
+      <h3>🌠 Về bản thân</h3>
+      <p>Mình là kiểu người thích quan sát nhiều hơn là nói, nhưng bên trong luôn tò mò với những điều mới mẻ. Với mình, tiếng Trung không đơn thuần là một ngôn ngữ cần học, mà còn là cánh cửa mở ra một nền văn hoá có chiều sâu hàng nghìn năm. Mình tin vào câu nói "học không có điểm dừng" (学无止境) — chỉ cần mỗi ngày cố gắng thêm một chút, những nỗ lực nhỏ ấy rồi sẽ cộng dồn thành một hành trình dài và bền vững.</p>
+    </div>
+    <div class="tab-panel" id="panel-so-thich">
+      <h3>🎨 Một vài sở thích nho nhỏ</h3>
+      <p>Ngoài giờ học, đây là những điều giúp mình nạp lại năng lượng và nuôi dưỡng tình yêu với ngôn ngữ, văn hoá:</p>
+      <div class="hobby-grid">
+        <div class="hobby-item"><span class="ic">🎬</span> Xem phim, series cổ trang Trung Quốc</div>
+        <div class="hobby-item"><span class="ic">🖌️</span> Luyện viết thư pháp Hán tự</div>
+        <div class="hobby-item"><span class="ic">🎶</span> Nghe nhạc Hoa ngữ, C-pop</div>
+        <div class="hobby-item"><span class="ic">☕</span> Pha trà, đọc sách cuối tuần</div>
+        <div class="hobby-item"><span class="ic">🌃</span> Ngắm sao, chụp ảnh bầu trời đêm</div>
+        <div class="hobby-item"><span class="ic">🗺️</span> Tìm hiểu lịch sử, địa danh Trung Hoa</div>
+      </div>
+    </div>
+    <div class="tab-panel" id="panel-hoc-tap">
+      <h3>🎯 Mục tiêu học tập và phát triển</h3>
+      <p>Song song với việc củng cố nền tảng tiếng Trung, mình mong muốn trang bị thêm những kỹ năng số cần thiết cho việc học tập hiện đại. Cụ thể, mình hướng đến:</p>
+      <ul class="goal-list">
+        <li>Sử dụng công nghệ như một công cụ hỗ trợ đắc lực, thay vì né tránh hay e ngại nó.</li>
+        <li>Hiểu sâu hơn về lịch sử và văn hoá Trung Hoa nhờ sự trợ giúp của trí tuệ nhân tạo.</li>
+        <li>Rèn luyện sự tự tin khi trình bày ý tưởng và quan điểm cá nhân trước đám đông.</li>
+        <li>Biến AI thành một người bạn đồng hành đáng tin cậy, giúp việc học ngôn ngữ trở nên hiệu quả hơn.</li>
+      </ul>
+    </div>
+    <div class="tab-panel" id="panel-portfolio">
+      <h3>📔 Mục tiêu của Portfolio</h3>
+      <p>Trang web này giống như một cuốn sổ tay ghi lại những bước đi đầu tiên của mình với môn Công nghệ số. Portfolio này đóng vai trò là:</p>
+      <ul class="goal-list">
+        <li>Một không gian để mình sắp xếp lại toàn bộ kiến thức đã tiếp thu theo cách trực quan, dễ theo dõi nhất.</li>
+        <li>Một dấu mốc phản chiếu sự thay đổi của bản thân qua từng bài tập, từng giai đoạn.</li>
+        <li>Một món quà nhỏ mình dành tặng chính mình sau một học kỳ nhiều nỗ lực và trải nghiệm.</li>
+      </ul>
+    </div>
+    <div class="tab-panel closing" id="panel-loi-ket">
+      <h3>💌 Lời kết</h3>
+      <p>Bắt đầu làm quen với công nghệ chưa bao giờ là điều dễ dàng với một sinh viên ngành ngôn ngữ như mình. Nhưng mình tin rằng cứ kiên trì từng bước nhỏ, mọi thứ rồi sẽ đâu vào đấy. Cảm ơn bạn đã dành thời gian ghé thăm góc nhỏ này!</p>
+    </div>
+  </div>
+</section>
+
+<section id="bai-tap">
+  <div class="section-head reveal">
+    <span class="eyebrow">Sản phẩm cá nhân</span>
+    <h2>Hành trình 6 bài tập cá nhân 🌌</h2>
+    <p>Trượt ngang để xem hết các dự án nhỏ mình đã hoàn thành nhé</p>
+  </div>
+  <div class="carousel-wrap reveal">
+    <div class="carousel" id="carousel">
+      <div class="c-card">
+        <span class="tag">Bài 1</span>
+        <div class="c-num">1</div>
+        <h3>✨ Thao tác cơ bản với tệp tin và thư mục</h3>
+        <div class="c-goal">
+          <div class="row"><b>🎯 Mục tiêu:</b> Hiểu rõ cách tổ chức hệ điều hành để hình thành thói quen lưu trữ, sắp xếp tài liệu học tập một cách khoa học.</div>
+          <div class="row result"><b>🌙 Quá trình thực hiện:</b> Thực hành phân loại, di chuyển tệp tin theo từng chủ đề; làm quen với các phím tắt giúp thao tác nhanh và chính xác hơn.</div>
+        </div>
+        <a href="https://drive.google.com/file/d/YOUR_FILE_ID_1/view?usp=drive_link" class="drive-btn" target="_blank" rel="noopener">GG Drive</a>
+      </div>
+      <div class="c-card">
+        <span class="tag">Bài 2</span>
+        <div class="c-num">2</div>
+        <h3>✨ Tìm kiếm và thẩm định thông tin học thuật</h3>
+        <div class="c-goal">
+          <div class="row"><b>🎯 Mục tiêu:</b> Rèn tư duy nghiên cứu thông qua việc khai thác các nguồn học liệu uy tín như Google Scholar, CNKI.</div>
+          <div class="row result"><b>🌙 Quá trình thực hiện:</b> Áp dụng các toán tử tìm kiếm nâng cao để thu hẹp phạm vi; đối chiếu nhiều nguồn để kiểm chứng độ tin cậy trước khi đưa vào bài luận.</div>
+        </div>
+        <a href="https://drive.google.com/file/d/YOUR_FILE_ID_2/view?usp=drive_link" class="drive-btn" target="_blank" rel="noopener">GG Drive</a>
+      </div>
+      <div class="c-card">
+        <span class="tag">Bài 3</span>
+        <div class="c-num">3</div>
+        <h3>✨ Xây dựng câu lệnh (Prompt) hiệu quả cho việc học ngôn ngữ</h3>
+        <div class="c-goal">
+          <div class="row"><b>🎯 Mục tiêu:</b> Làm chủ kỹ thuật đặt câu lệnh để khai thác đúng và đủ khả năng hỗ trợ của AI trong việc ôn luyện.</div>
+          <div class="row result"><b>🌙 Quá trình thực hiện:</b> Thử nghiệm nhiều dạng prompt khác nhau, điều chỉnh dần để AI đưa ra bộ câu hỏi ôn tập sát với nội dung cần củng cố.</div>
+        </div>
+        <a href="https://drive.google.com/file/d/YOUR_FILE_ID_3/view?usp=drive_link" class="drive-btn" target="_blank" rel="noopener">GG Drive</a>
+      </div>
+      <div class="c-card">
+        <span class="tag">Bài 4</span>
+        <div class="c-num">4</div>
+        <h3>✨ Phối hợp làm việc nhóm trên nền tảng trực tuyến</h3>
+        <div class="c-goal">
+          <div class="row"><b>🎯 Mục tiêu:</b> Ứng dụng các công cụ đám mây để việc trao đổi, chia sẻ tài liệu trong nhóm diễn ra suôn sẻ, minh bạch.</div>
+          <div class="row result"><b>🌙 Quá trình thực hiện:</b> Cùng nhóm phân chia nhiệm vụ, thiết lập quyền truy cập và chỉnh sửa tài liệu chung theo thời gian thực.</div>
+        </div>
+        <a href="https://drive.google.com/file/d/YOUR_FILE_ID_4/view?usp=drive_link" class="drive-btn" target="_blank" rel="noopener">GG Drive</a>
+      </div>
+      <div class="c-card">
+        <span class="tag">Bài 5</span>
+        <div class="c-num">5</div>
+        <h3>✨ Ứng dụng AI tạo sinh trong sáng tạo nội dung</h3>
+        <div class="c-goal">
+          <div class="row"><b>🎯 Mục tiêu:</b> Khai thác các công cụ AI tạo sinh (văn bản, hình ảnh) để nâng cao chất lượng bài thuyết trình.</div>
+          <div class="row result"><b>🌙 Quá trình thực hiện:</b> Lên ý tưởng, chọn lọc và chỉnh sửa nội dung do AI gợi ý, đảm bảo sản phẩm cuối vẫn giữ được góc nhìn cá nhân.</div>
+        </div>
+        <a href="https://drive.google.com/file/d/YOUR_FILE_ID_5/view?usp=drive_link" class="drive-btn" target="_blank" rel="noopener">GG Drive</a>
+      </div>
+      <div class="c-card">
+        <span class="tag">Bài 6</span>
+        <div class="c-num">6</div>
+        <h3>✨ Sử dụng AI có trách nhiệm trong học tập</h3>
+        <div class="c-goal">
+          <div class="row"><b>🎯 Mục tiêu:</b> Hiểu đúng giới hạn của AI và nguyên tắc liêm chính học thuật khi ứng dụng công nghệ vào việc học.</div>
+          <div class="row result"><b>🌙 Quá trình thực hiện:</b> Đối chiếu sản phẩm với quy định của nhà trường về sử dụng AI; luyện tập trích dẫn nguồn rõ ràng, minh bạch.</div>
+        </div>
+        <a href="https://drive.google.com/file/d/YOUR_FILE_ID_6/view?usp=drive_link" class="drive-btn" target="_blank" rel="noopener">GG Drive</a>
+      </div>
+    </div>
+    <div class="carousel-nav">
+      <button class="c-arrow" id="prevBtn">←</button>
+      <button class="c-arrow" id="nextBtn">→</button>
+    </div>
+  </div>
+</section>
+
+<section id="tong-ket">
+  <div class="section-head reveal">
+    <span class="eyebrow">Tổng kết</span>
+    <h2>Nhìn nhận &amp; Trải nghiệm học tập 🌙</h2>
+    <p>Chạm vào từng thẻ để biết chi tiết nhé</p>
+  </div>
+
+  <div class="flip-grid">
+    <div class="flip-card reveal">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="ic">💡</div><h3>Điều đọng lại sau cùng</h3><div class="hint">chạm để xem thêm</div></div>
+        <div class="flip-face flip-back"><p>Cuối cùng thì công nghệ hay AI cũng chỉ là những công cụ hỗ trợ. Sự kiên trì và khả năng tự sắp xếp thời gian của bản thân mới là yếu tố quyết định hướng đi. Sau học phần này, mình cảm thấy mình biết cách quản lý công việc gọn gàng và có kế hoạch hơn trước rất nhiều.</p></div>
+      </div>
+    </div>
+    <div class="flip-card reveal">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="ic">🌱</div><h3>Một phiên bản tự tin hơn</h3><div class="hint">chạm để xem thêm</div></div>
+        <div class="flip-face flip-back"><p>Từ chỗ còn ngần ngại trước những thuật ngữ công nghệ, giờ đây mình đã có thể tự tay xây dựng và quản lý không gian số của riêng mình. Những kỹ năng nhỏ được tích lũy dần trong học kỳ này sẽ là nền tảng cho chặng đường dài phía trước.</p></div>
+      </div>
+    </div>
+    <div class="flip-card reveal">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="ic">🎯</div><h3>Không chỉ dừng ở điểm số</h3><div class="hint">chạm để xem thêm</div></div>
+        <div class="flip-face flip-back"><p>Mình không muốn những gì học được chỉ nằm gọn trong một bài kiểm tra. Mình mong có thể tiếp tục ứng dụng công nghệ vào việc học tiếng Trung mỗi ngày, sử dụng AI một cách thông minh nhưng vẫn giữ được sự trung thực trong học thuật.</p></div>
+      </div>
+    </div>
+    <div class="flip-card reveal">
+      <div class="flip-inner">
+        <div class="flip-face flip-front"><div class="ic">💗</div><h3>Một chương nhỏ đáng nhớ</h3><div class="hint">chạm để xem thêm</div></div>
+        <div class="flip-face flip-back"><p>Hoàn thành trang web này giống như mình vừa khép lại một chương nhật ký nhỏ của học kỳ. Đây không chỉ là một bài nộp, mà còn là minh chứng cho việc một sinh viên ngành ngôn ngữ như mình cũng có thể tự tin bước vào thế giới công nghệ số.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-stats">
+    <div class="stat reveal"><div class="num">06/06</div><div class="label">Dự án hoàn thành</div></div>
+    <div class="stat reveal"><div class="num">100%</div><div class="label">Nỗ lực mỗi ngày</div></div>
+    <div class="stat reveal"><div class="num">A+</div><div class="label">Mục tiêu môn học</div></div>
+  </div>
+</section>
+
+<footer>
+  ✨ made by Lê Tuệ Giang — cảm ơn bạn đã ghé thăm 🌙
+</footer>
+
+<script>
+  // ===== starfield =====
+  const starLayer = document.getElementById('star-layer');
+  for(let i=0;i<90;i++){
+    const s = document.createElement('div');
+    s.className = 'star-dot';
+    const size = Math.random()*2 + 1;
+    s.style.width = size + 'px';
+    s.style.height = size + 'px';
+    s.style.left = (Math.random()*100) + 'vw';
+    s.style.top = (Math.random()*100) + 'vh';
+    s.style.animationDuration = (2 + Math.random()*3) + 's';
+    s.style.animationDelay = (Math.random()*4) + 's';
+    starLayer.appendChild(s);
+  }
+
+  // ===== faint constellation lines =====
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const constel = document.getElementById('constellation');
+  constel.setAttribute('viewBox', '0 0 100 100');
+  constel.setAttribute('preserveAspectRatio', 'none');
+  for(let i=0;i<7;i++){
+    const x1 = Math.random()*100, y1 = Math.random()*100;
+    const x2 = x1 + (Math.random()*16-8), y2 = y1 + (Math.random()*16-8);
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.setAttribute('stroke', 'rgba(255,255,255,0.5)');
+    line.setAttribute('stroke-width', '0.08');
+    constel.appendChild(line);
+  }
+
+  const stickerEmojis = ['⭐','🌙','💫','✨','💗','🎐'];
+  const layer = document.getElementById('sticker-layer');
+  const stickers = [];
+  for(let i=0;i<14;i++){
+    const el = document.createElement('div');
+    el.className = 'float-sticker';
+    el.textContent = stickerEmojis[i % stickerEmojis.length];
+    el.style.left = (Math.random()*100) + 'vw';
+    el.style.top = (Math.random()*420) + 'vh';
+    el.style.animationDelay = (Math.random()*4) + 's';
+    el.style.animationDuration = (4 + Math.random()*3) + 's';
+    el.style.fontSize = (1.0 + Math.random()*1.1) + 'rem';
+    layer.appendChild(el);
+    stickers.push({ el, speed: 0.05 + Math.random()*0.15 });
+  }
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    stickers.forEach(s => { s.el.style.transform = `translateY(${-y * s.speed}px)`; });
+  }, { passive: true });
+
+  const glow = document.getElementById('cursorGlow');
+  window.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px'; glow.style.top = e.clientY + 'px'; glow.style.opacity = 1;
+  });
+  window.addEventListener('mouseleave', () => { glow.style.opacity = 0; });
+
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  const carousel = document.getElementById('carousel');
+  document.getElementById('prevBtn').addEventListener('click', () => carousel.scrollBy({ left: -320, behavior: 'smooth' }));
+  document.getElementById('nextBtn').addEventListener('click', () => carousel.scrollBy({ left: 320, behavior: 'smooth' }));
+
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  reveals.forEach((el, i) => { el.style.transitionDelay = (i % 6) * 0.07 + 's'; });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el=>io.observe(el));
+
+  document.querySelectorAll('a[href^="#"]').forEach(link=>{
+    link.addEventListener('click', (e)=>{
+      const target = document.querySelector(link.getAttribute('href'));
+      if(target){ e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+  const navIo = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        navLinks.forEach(l=>{ l.classList.toggle('active', l.getAttribute('href') === '#' + id); });
+      }
+    });
+  }, { threshold: 0.35 });
+  sections.forEach(s=>navIo.observe(s));
+
+  // ===== disable 3D flip when printing =====
+  function prepareFlipCardsForPrint() {
+    document.querySelectorAll('.flip-card').forEach(card => {
+      const inner = card.querySelector('.flip-inner');
+      const front = card.querySelector('.flip-front');
+      const back  = card.querySelector('.flip-back');
+      card.classList.remove('flipped');
+      card.style.height = 'auto';
+      inner.style.transform = 'none';
+      inner.style.transition = 'none';
+      inner.style.position = 'static';
+      inner.style.height = 'auto';
+      [front, back].forEach(face => {
+        face.style.position = 'static';
+        face.style.transform = 'none';
+        face.style.height = 'auto';
+        face.style.marginBottom = '14px';
+      });
+    });
+  }
+  function restoreFlipCardsAfterPrint() {
+    document.querySelectorAll('.flip-card').forEach(card => {
+      const inner = card.querySelector('.flip-inner');
+      const front = card.querySelector('.flip-front');
+      const back  = card.querySelector('.flip-back');
+      card.removeAttribute('style');
+      inner.removeAttribute('style');
+      front.removeAttribute('style');
+      back.removeAttribute('style');
+    });
+  }
+  window.addEventListener('beforeprint', prepareFlipCardsForPrint);
+  window.addEventListener('afterprint', restoreFlipCardsAfterPrint);
+</script>
+</body>
+</html>

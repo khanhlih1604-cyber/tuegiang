@@ -289,24 +289,34 @@ footer { position: relative; z-index: 2; text-align: center; padding: 40px 6vw 6
   .tab-panel { padding: 26px 22px; }
 }
 @media print {
-  /* Ép toàn bộ trang phải giữ màu tối huyền bí */
+  /* 1. Ép chữ lên màu trắng để nổi bật trên nền tối giả */
   html, body {
-    background: #060612 !important; /* Mã màu nền gốc của Giang */
-    color: #ffffff !important;      /* Ép chữ chính lên màu trắng rõ ràng */
+    color: #ffffff !important;
+    background-color: #ffffff !important; /* Đánh lừa trình duyệt rằng đây là trang trắng */
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  /* Giữ màu chuyển sắc (gradient) cho body nếu có */
-  body {
-    background-image: radial-gradient(circle at 20% 10%, #17173a 0%, #060612 100%) !important;
-    background-attachment: scroll !important; 
+  /* 2. Mẹo Hack: Tạo một lớp phủ màu tối giả lập làm nền */
+  body::before {
+    content: "" !important;
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #060612 !important; /* Mã màu tối của Giang */
+    z-index: -9999 !important; /* Đẩy ra sau cùng làm nền */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  /* Đảm bảo các khung nội dung (Cards) không bị đổi màu sai */
+  /* 3. Giữ màu cho các khung nội dung (Cards) nổi lên trên nền giả */
   .lesson-card, .about-story, .facts-card, .goal-card, .timeline-card, div[class*="card"] {
-    background: rgba(255, 255, 255, 0.05) !important;
+    position: relative !important;
+    z-index: 1 !important;
+    background: rgba(255, 255, 255, 0.08) !important;
     color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }

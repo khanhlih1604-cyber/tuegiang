@@ -321,3 +321,33 @@ footer { position: relative; z-index: 2; text-align: center; padding: 40px 6vw 6
     print-color-adjust: exact !important;
   }
 }
+@media print {
+  /* 1. Ép toàn bộ nền bao che của trang thành màu tối */
+  html, body {
+    background-color: #0c0813 !important; /* Màu tối gốc của Giang */
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 2. CHÌA KHÓA: Ép tất cả các Section đều phải có nền tối giống nhau, không cho phép section nào tự biến thành màu trắng */
+  section, header, footer, main, div[id], div[class*="hero"], div[class*="container"] {
+    background-color: #0c0813 !important; /* Đồng bộ toàn bộ các vùng trên web */
+    background-image: none !important; /* Tạm thời ẩn gradient động để tránh lỗi cắt trang */
+    color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 3. Giữ lại màu sắc cho các thẻ Card ở phần trên */
+  .about-story, .facts-card, .goal-card, .lesson-card {
+    background: rgba(255, 255, 255, 0.05) !important; /* Tạo nền mờ cho card nổi lên */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+  }
+
+  /* 4. Sửa lỗi chữ bị mờ nhạt */
+  h1, h2, h3, h4, p, span, li, a {
+    color: #ffffff !important; /* Ép toàn bộ chữ về màu trắng để đọc được trên nền tối */
+  }
+}
